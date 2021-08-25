@@ -1,6 +1,6 @@
 # PolytopeML
 Description:   
-Machine Learning techniques are applied to datasets of polygons and polyhedra, examining how properties such as volume, dual volume, reflexivity can be learnt from Plucker coordinate representation using neural networks.
+Machine Learning techniques are applied to datasets of polygons and polyhedra, examining how properties such as volume, dual volume, reflexivity, Gorenstein index, codimension can be learnt from Plucker coordinate representation using neural networks.
 
 How to run:  
 ~ Polygon data & investigations are available in the folder Polygon, all investigations are run from one script with an editable ML function, details on how to run are given within the .py file.  
