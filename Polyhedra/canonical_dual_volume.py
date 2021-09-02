@@ -10,7 +10,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPRegressor, MLPClassifier
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn import svm
-from sklearn.metrics import accuracy_score, mean_squared_error
+from sklearn.metrics import accuracy_score, mean_squared_error, mean_absolute_error
 from sklearn.metrics import classification_report,confusion_matrix
 from keras.preprocessing.sequence import pad_sequences
 from sklearn.decomposition import PCA
@@ -66,7 +66,6 @@ def appendgcd(l,tlen):
 # Pluecker coords as input:
 # load trained model:
 reg=load('Plk_DualVol_MLPReg.joblib')
-model=keras.models.load_model('Plk_DualVol_CNN')
 
 
 
@@ -102,6 +101,8 @@ reg.fit(X_train, Y_train)
 
 
 Y_pred = reg.predict(X_test)
+print(mean_absolute_error(Y_pred, Y))
+
 print(acc(Y_test,Y_pred,0.5))
 print(acc(Y_test,Y_pred,1))
 print(acc(Y_test,Y_pred,2))
@@ -114,73 +115,12 @@ print(acc(Y_test,Y_pred,5))
 dump(reg,'Plk_DualVol_MLPReg.joblib')
 
 
-# CNN:
-
-trainingindex = random.sample([k for k in range(len(X))],
-round(len(X)*0.9) );
-validateindex = list(set([k for k in range(len(X))]) -
-set(trainingindex));
-trainingX = np.array([X[a] for a in trainingindex]);
-trainingY = np.array([Y[a] for a in trainingindex]);
-validateX = np.array([X[a] for a in validateindex]);
-validateY = np.array([Y[a] for a in validateindex]);
-
-trainingX0=[]
-validateX0=[]
-for i in range (0,len(trainingX)):
-    trainingX0.append(np.expand_dims(trainingX[i],axis=0))
-trainingX=np.array([trainingX0[a] for a in range (0,len(trainingX0))]);
-for i in range (0,len(validateX)):
-    validateX0.append(np.expand_dims(validateX[i],axis=0))
-validateX=np.array([validateX0[a] for a in range (0,len(validateX0))]);
-
-
-
-
-model = Sequential()
-input_shapeX = trainingX[0].shape
-model.add(Conv1D(32, kernel_size=3,activation='linear',padding='same',input_shape=input_shapeX))
-model.add(LeakyReLU(alpha=0.1))
-model.add(MaxPooling1D(2,padding='same'))
-model.add(Flatten())
-model.add(LeakyReLU(alpha=0.1))                  
-model.add(Dense(1))
-
-model.compile(
-    optimizer='adam', loss='mean_squared_error')
-
-model.summary()
-
-
-
-
-model.fit(trainingX,trainingY,batch_size=16,epochs=100,verbose=1,
-validation_data=(validateX,validateY))
-
-
-
-predictY = model.predict(validateX,verbose = 1)[:,0]
-
-
-print(acc(validateY,predictY,0.5))
-print(acc(validateY,predictY,1))
-print(acc(validateY,predictY,2))
-print(acc(validateY,predictY,3))
-print(acc(validateY,predictY,4))
-print(acc(validateY,predictY,5))
-
-
-# save trained model:
-
-model.save('Plk_DualVol_CNN')
-
 
 ################################################################################################
 # augmentation with gcd(length-1)
 
 
 reg=load('gcdLen-1_DualVol_MLPReg.joblib')
-model=keras.models.load_model('gcdLen-1_DualVol_CNN')
 
 
 
@@ -220,6 +160,8 @@ reg.fit(X_train, Y_train)
 
 
 Y_pred = reg.predict(X_test)
+print(mean_absolute_error(Y_pred, Y))
+
 print(acc(Y_test,Y_pred,0.5))
 print(acc(Y_test,Y_pred,1))
 print(acc(Y_test,Y_pred,2))
@@ -231,60 +173,6 @@ print(acc(Y_test,Y_pred,5))
 dump(reg,'gcdLen-1_DualVol_MLPReg.joblib')
 
 
-# CNN:
-
-trainingindex = random.sample([k for k in range(len(X))],
-round(len(X)*0.9) );
-validateindex = list(set([k for k in range(len(X))]) -
-set(trainingindex));
-trainingX = np.array([X[a] for a in trainingindex]);
-trainingY = np.array([Y[a] for a in trainingindex]);
-validateX = np.array([X[a] for a in validateindex]);
-validateY = np.array([Y[a] for a in validateindex]);
-
-trainingX0=[]
-validateX0=[]
-for i in range (0,len(trainingX)):
-    trainingX0.append(np.expand_dims(trainingX[i],axis=0))
-trainingX=np.array([trainingX0[a] for a in range (0,len(trainingX0))]);
-for i in range (0,len(validateX)):
-    validateX0.append(np.expand_dims(validateX[i],axis=0))
-validateX=np.array([validateX0[a] for a in range (0,len(validateX0))]);
-
-
-
-model = Sequential()
-input_shapeX = trainingX[0].shape
-model.add(Conv1D(32, kernel_size=3,activation='linear',padding='same',input_shape=input_shapeX))
-model.add(LeakyReLU(alpha=0.1))
-model.add(MaxPooling1D(2,padding='same'))
-model.add(Flatten())
-model.add(LeakyReLU(alpha=0.1))                  
-model.add(Dense(1))
-
-model.compile(
-    optimizer='adam', loss='mean_squared_error')
-
-model.summary()
-
-
-model.fit(trainingX,trainingY,batch_size=16,epochs=100,verbose=1,
-validation_data=(validateX,validateY))
-
-
-predictY = model.predict(validateX,verbose = 1)[:,0]
-
-
-print(acc(validateY,predictY,0.5))
-print(acc(validateY,predictY,1))
-print(acc(validateY,predictY,2))
-print(acc(validateY,predictY,3))
-print(acc(validateY,predictY,4))
-print(acc(validateY,predictY,5))
-
-
-model.save('gcdLen-1_DualVol_CNN')
-
 
 ################################################################################################
 # fix plucker length
@@ -292,7 +180,6 @@ model.save('gcdLen-1_DualVol_CNN')
 
 
 reg=load('Plk10_DualVol_MLPReg.joblib')
-model=keras.models.load_model('Plk10_DualVol_CNN')
 
 
 
@@ -329,6 +216,8 @@ reg.fit(X_train, Y_train)
 
 
 Y_pred = reg.predict(X_test)
+print(mean_absolute_error(Y_pred, Y))
+
 print(acc(Y_test,Y_pred,0.5))
 print(acc(Y_test,Y_pred,1))
 print(acc(Y_test,Y_pred,2))
@@ -340,63 +229,11 @@ print(acc(Y_test,Y_pred,5))
 dump(reg,'Plk10_DualVol_MLPReg.joblib')
 
 
-# CNN:
-
-trainingindex = random.sample([k for k in range(len(X))],
-round(len(X)*0.9) );
-validateindex = list(set([k for k in range(len(X))]) -
-set(trainingindex));
-trainingX = np.array([X[a] for a in trainingindex]);
-trainingY = np.array([Y[a] for a in trainingindex]);
-validateX = np.array([X[a] for a in validateindex]);
-validateY = np.array([Y[a] for a in validateindex]);
-
-trainingX0=[]
-validateX0=[]
-for i in range (0,len(trainingX)):
-    trainingX0.append(np.expand_dims(trainingX[i],axis=0))
-trainingX=np.array([trainingX0[a] for a in range (0,len(trainingX0))]);
-for i in range (0,len(validateX)):
-    validateX0.append(np.expand_dims(validateX[i],axis=0))
-validateX=np.array([validateX0[a] for a in range (0,len(validateX0))]);
-
-model = Sequential()
-input_shapeX = trainingX[0].shape
-model.add(Conv1D(32, kernel_size=3,activation='linear',padding='same',input_shape=input_shapeX))
-model.add(LeakyReLU(alpha=0.1))
-model.add(MaxPooling1D(2,padding='same'))
-model.add(Flatten())
-model.add(LeakyReLU(alpha=0.1))                  
-model.add(Dense(1))
-
-model.compile(
-    optimizer='adam', loss='mean_squared_error')
-
-model.summary()
-
-model.fit(trainingX,trainingY,batch_size=16,epochs=100,verbose=1,
-validation_data=(validateX,validateY))
-
-
-
-predictY = model.predict(validateX,verbose = 1)[:,0]
-print(acc(validateY,predictY,0.5))
-print(acc(validateY,predictY,1))
-print(acc(validateY,predictY,2))
-print(acc(validateY,predictY,3))
-print(acc(validateY,predictY,4))
-print(acc(validateY,predictY,5))
-
-
-
-model.save('Plk10_DualVol_CNN')
-
 
 
 
 
 reg=load('plk10gcdLen-1_DualVol_MLPReg.joblib')
-model=keras.models.load_model('plk10gcdLen-1_DualVol_CNN')
 
 
 
@@ -435,6 +272,8 @@ reg.fit(X_train, Y_train)
 
 
 Y_pred = reg.predict(X_test)
+print(mean_absolute_error(Y_pred, Y))
+
 print(acc(Y_test,Y_pred,0.5))
 print(acc(Y_test,Y_pred,1))
 print(acc(Y_test,Y_pred,2))
@@ -445,57 +284,6 @@ print(acc(Y_test,Y_pred,5))
 
 dump(reg,'plk10gcdLen-1_DualVol_MLPReg.joblib')
 
-
-# CNN:
-
-trainingindex = random.sample([k for k in range(len(X))],
-round(len(X)*0.9) );
-validateindex = list(set([k for k in range(len(X))]) -
-set(trainingindex));
-trainingX = np.array([X[a] for a in trainingindex]);
-trainingY = np.array([Y[a] for a in trainingindex]);
-validateX = np.array([X[a] for a in validateindex]);
-validateY = np.array([Y[a] for a in validateindex]);
-
-trainingX0=[]
-validateX0=[]
-for i in range (0,len(trainingX)):
-    trainingX0.append(np.expand_dims(trainingX[i],axis=0))
-trainingX=np.array([trainingX0[a] for a in range (0,len(trainingX0))]);
-for i in range (0,len(validateX)):
-    validateX0.append(np.expand_dims(validateX[i],axis=0))
-validateX=np.array([validateX0[a] for a in range (0,len(validateX0))]);
-
-model = Sequential()
-input_shapeX = trainingX[0].shape
-model.add(Conv1D(32, kernel_size=3,activation='linear',padding='same',input_shape=input_shapeX))
-model.add(LeakyReLU(alpha=0.1))
-model.add(MaxPooling1D(2,padding='same'))
-model.add(Flatten())
-model.add(LeakyReLU(alpha=0.1))                  
-model.add(Dense(1))
-
-model.compile(
-    optimizer='adam', loss='mean_squared_error')
-
-model.summary()
-
-model.fit(trainingX,trainingY,batch_size=16,epochs=100,verbose=1,
-validation_data=(validateX,validateY))
-
-
-
-predictY = model.predict(validateX,verbose = 1)[:,0]
-print(acc(validateY,predictY,0.5))
-print(acc(validateY,predictY,1))
-print(acc(validateY,predictY,2))
-print(acc(validateY,predictY,3))
-print(acc(validateY,predictY,4))
-print(acc(validateY,predictY,5))
-
-
-
-model.save('plk10gcdLen-1_DualVol_CNN')
 
 
 

@@ -10,7 +10,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPRegressor, MLPClassifier
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn import svm
-from sklearn.metrics import accuracy_score, mean_squared_error
+from sklearn.metrics import accuracy_score, mean_squared_error, mean_absolute_error
 from sklearn.metrics import classification_report,confusion_matrix
 from keras.preprocessing.sequence import pad_sequences
 from sklearn.decomposition import PCA
@@ -82,6 +82,8 @@ reg = MLPRegressor(solver='adam', alpha=1e-5, random_state=1,hidden_layer_sizes=
 reg.fit(X1_train, Y1_train)
 
 Y1_pred = reg.predict(X1_test)
+print(mean_absolute_error(Y1_pred, Y))
+
 print(acc(Y1_test,Y1_pred,0.5))
 print(acc(Y1_test,Y1_pred,1))
 print(acc(Y1_test,Y1_pred,2))
@@ -109,6 +111,8 @@ X_train, X_test, Y_train, Y_test = train_test_split(    X, Y, test_size=0.8,
 reg.fit(X_train, Y_train)
 
 Y_pred = reg.predict(X_test)
+print(mean_absolute_error(Y_pred, Y))
+
 print(acc(Y_test,Y_pred,0.5))
 print(acc(Y_test,Y_pred,1))
 print(acc(Y_test,Y_pred,2))
@@ -116,51 +120,6 @@ print(acc(Y_test,Y_pred,3))
 print(acc(Y_test,Y_pred,4))
 
 
-# Even for lower training percentage:
-# Remember to re-train reg from 2d every time
-
-
-
-X_train, X_test, Y_train, Y_test = train_test_split(    X, Y, test_size=0.9,
-    shuffle=True)
-
-reg.fit(X_train, Y_train)
-
-Y_pred = reg.predict(X_test)
-print(acc(Y_test,Y_pred,0.5))
-print(acc(Y_test,Y_pred,1))
-print(acc(Y_test,Y_pred,2))
-print(acc(Y_test,Y_pred,3))
-print(acc(Y_test,Y_pred,4))
-
-
-
-X_train, X_test, Y_train, Y_test = train_test_split(    X, Y, test_size=0.95,
-    shuffle=True)
-
-reg.fit(X_train, Y_train)
-
-Y_pred = reg.predict(X_test)
-print(acc(Y_test,Y_pred,0.5))
-print(acc(Y_test,Y_pred,1))
-print(acc(Y_test,Y_pred,2))
-print(acc(Y_test,Y_pred,3))
-print(acc(Y_test,Y_pred,4))
-
-
-
-
-X_train, X_test, Y_train, Y_test = train_test_split(    X, Y, test_size=0.99,
-    shuffle=True)
-
-reg.fit(X_train, Y_train)
-
-Y_pred = reg.predict(X_test)
-print(acc(Y_test,Y_pred,0.5))
-print(acc(Y_test,Y_pred,1))
-print(acc(Y_test,Y_pred,2))
-print(acc(Y_test,Y_pred,3))
-print(acc(Y_test,Y_pred,4))
 
 
 # If we do not further train any 3d data, and only use the model for 2d to predict 3d ones:
@@ -186,6 +145,8 @@ reg = MLPRegressor(solver='adam', alpha=1e-5, random_state=1,hidden_layer_sizes=
 reg.fit(X1_train, Y1_train)
 
 Y1_pred = reg.predict(X1_test)
+print(mean_absolute_error(Y1_pred, Y))
+
 print(acc(Y1_test,Y1_pred,0.5))
 print(acc(Y1_test,Y1_pred,1))
 print(acc(Y1_test,Y1_pred,2))
@@ -211,6 +172,8 @@ X_train, X_test, Y_train, Y_test = train_test_split(    X, Y, test_size=23999,
 reg.fit(X_train, Y_train)
 
 Y_pred = reg.predict(X_test)
+print(mean_absolute_error(Y_pred, Y))
+
 print(acc(Y_test,Y_pred,0.5))
 print(acc(Y_test,Y_pred,1))
 print(acc(Y_test,Y_pred,2))
@@ -247,6 +210,8 @@ reg = MLPRegressor(solver='adam', alpha=1e-5, random_state=1,hidden_layer_sizes=
 reg.fit(X1_train, Y1_train)
 
 Y1_pred = reg.predict(X1_test)
+print(mean_absolute_error(Y1_pred, Y))
+
 print(acc(Y1_test,Y1_pred,0.5))
 print(acc(Y1_test,Y1_pred,1))
 print(acc(Y1_test,Y1_pred,2))
@@ -273,6 +238,8 @@ X_train, X_test, Y_train, Y_test = train_test_split(    X, Y, test_size=0.75,
 reg.fit(X_train, Y_train)
 
 Y_pred = reg.predict(X_test)
+print(mean_absolute_error(Y_pred, Y))
+
 print(acc(Y_test,Y_pred,0.5))
 print(acc(Y_test,Y_pred,1))
 print(acc(Y_test,Y_pred,2))
@@ -308,6 +275,8 @@ reg = MLPRegressor(solver='adam', alpha=1e-5, random_state=1,hidden_layer_sizes=
 reg.fit(X1_train, Y1_train)
 
 Y1_pred = reg.predict(X1_test)
+print(mean_absolute_error(Y1_pred, Y))
+
 print(acc(Y1_test,Y1_pred,0.5))
 print(acc(Y1_test,Y1_pred,1))
 print(acc(Y1_test,Y1_pred,2))
@@ -339,6 +308,8 @@ X1_train, X1_test, Y1_train, Y1_test = train_test_split(    X1, Y1, test_size=0.
 reg.fit(X1_train, Y1_train)
 
 Y1_pred = reg.predict(X1_test)
+print(mean_absolute_error(Y1_pred, Y))
+
 print(acc(Y1_test,Y1_pred,0.5))
 print(acc(Y1_test,Y1_pred,1))
 print(acc(Y1_test,Y1_pred,2))
@@ -376,6 +347,8 @@ reg = MLPRegressor(solver='adam', alpha=1e-5, random_state=1,hidden_layer_sizes=
 reg.fit(X1_train, Y1_train)
 
 Y1_pred = reg.predict(X1_test)
+print(mean_absolute_error(Y1_pred, Y))
+
 print(acc(Y1_test,Y1_pred,0.5))
 print(acc(Y1_test,Y1_pred,1))
 print(acc(Y1_test,Y1_pred,2))
@@ -408,6 +381,8 @@ X_train, X_test, Y_train, Y_test = train_test_split(    X, Y, test_size=0.8,
 reg.fit(X_train, Y_train)
 
 Y_pred = reg.predict(X_test)
+print(mean_absolute_error(Y_pred, Y))
+
 print(acc(Y_test,Y_pred,0.5))
 print(acc(Y_test,Y_pred,1))
 print(acc(Y_test,Y_pred,2))
@@ -427,6 +402,8 @@ X_train, X_test, Y_train, Y_test = train_test_split(    X, Y, test_size=0.1,
 reg.fit(X_train, Y_train)
 
 Y_pred = reg.predict(X_test)
+print(mean_absolute_error(Y_pred, Y))
+
 print(acc(Y_test,Y_pred,0.5))
 print(acc(Y_test,Y_pred,1))
 print(acc(Y_test,Y_pred,2))

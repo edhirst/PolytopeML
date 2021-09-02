@@ -10,7 +10,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPRegressor, MLPClassifier
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn import svm
-from sklearn.metrics import accuracy_score, mean_squared_error
+from sklearn.metrics import accuracy_score, mean_squared_error, mean_absolute_error
 from sklearn.metrics import classification_report,confusion_matrix
 from keras.preprocessing.sequence import pad_sequences
 from sklearn.decomposition import PCA
