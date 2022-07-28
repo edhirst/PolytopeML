@@ -5,3 +5,17 @@ Machine Learning techniques are applied to datasets of polygons and polyhedra, e
 How to run:  
 ~ Polygon data & investigations are available in the folder `Polygon`, all investigations are run from one script with an editable ML function, details on how to run are given within the .py file.  
 ~ Polyhedra data is available at the GRDB from the link: http://www.grdb.co.uk/forms/toricf3c, scripts for the investigations can be found in the folder `Polyhedra`, with details of how to run given within the respective .py files.    
+
+# BibTeX Citation
+``` 
+@article{Bao:2021ofk,
+    author = "Bao, Jiakang and He, Yang-Hui and Hirst, Edward and Hofscheier, Johannes and Kasprzyk, Alexander and Majumder, Suvajit",
+    title = "{Polytopes and Machine Learning}",
+    eprint = "2109.09602",
+    archivePrefix = "arXiv",
+    primaryClass = "math.CO",
+    reportNumber = "LIMS-2021-011",
+    month = "9",
+    year = "2021"
+}
+```
