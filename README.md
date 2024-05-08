@@ -15,7 +15,10 @@ How to run:
     archivePrefix = "arXiv",
     primaryClass = "math.CO",
     reportNumber = "LIMS-2021-011",
-    month = "9",
-    year = "2021"
+    doi = "10.1142/S281093922350003X",
+    journal = "Math. Sci.",
+    volume = "01",
+    pages = "181--211",
+    year = "2023"
 }
 ```
